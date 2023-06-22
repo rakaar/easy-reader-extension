@@ -1,4 +1,4 @@
-const extractImageUrl = require('./get_fig_from_link.js');
+const extractImageUrl = require('./extractImageUrl.js');
 
 // Tests for extractImageUrl() in test_get_fig_from_link.js
 async function run() {
