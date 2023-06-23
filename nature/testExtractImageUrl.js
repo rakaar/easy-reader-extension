@@ -1,3 +1,4 @@
+// testing extractImageUrl() in extractImageUrl.js
 const extractImageUrl = require('./extractImageUrl.js');
 
 // Tests for extractImageUrl() in test_get_fig_from_link.js

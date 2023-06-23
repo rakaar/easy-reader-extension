@@ -1,3 +1,4 @@
+// extract an image path link from URL of article and fig number
 const axios = require('axios');
 const cheerio = require('cheerio');
 const removeTrailingSlash = require('./remove_trailing_slash.js');

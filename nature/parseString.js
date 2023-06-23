@@ -1,3 +1,4 @@
+// extract fig number and subfigure index from a string
 function parseString(str) {
     // Function to extract figure number and sub figure  indices from a string
     // Input: "2c-e" or "1a"

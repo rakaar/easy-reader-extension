@@ -1,4 +1,4 @@
-// Tests for parseString() in from_str_get_fig_indices.js
+// Tests for parseString() in parseString.js
 const parseString = require('./parseString');
 // tests
 r = parseString("2c-e");

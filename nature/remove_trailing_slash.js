@@ -1,3 +1,4 @@
+// if a link ends with '/', remove it
 function removeTrailingSlash(url) {
     if (url.endsWith('/')) {
         return url.slice(0, -1);  // Remove the last character
