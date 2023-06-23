@@ -13,8 +13,15 @@ async function handleFig(window_href, selectedText) {
         console.log("In handleFig.js Image URL:", imageUrl);
 
         // inserting the image
+        // Remove any existing drawers
+        const existingDrawer = document.getElementById('sideDrawer');
+        if (existingDrawer) {
+        existingDrawer.remove();
+        }
+
         // Create a new div with a side drawer and cross button
         const drawer = document.createElement('div');
+        drawer.id = 'sideDrawer'; // Assign an id to the drawer
         drawer.style.position = 'fixed';
         drawer.style.zIndex = 1000;  // make sure the drawer appears on top of all other elements
         drawer.style.right = '0';  // align the drawer to the right side of the page
@@ -28,7 +35,7 @@ async function handleFig(window_href, selectedText) {
 
         // Add an image and a cross button to the drawer
         drawer.innerHTML = `
-            <button id="closeDrawer" style="position: absolute; right: 20px; top: 20px; background: none; border: none; font-size: 20px;">&times;</button>
+            <button id="closeDrawer" style="position: fixed; right: 20px; top: 20px; background: none; border: none; font-size: 20px;">&times;</button>
             <img src="${imageUrl}" style="width: 100%; height: 100%;">
         `;
 
@@ -38,15 +45,13 @@ async function handleFig(window_href, selectedText) {
         // Add an event listener for the cross button
         document.getElementById('closeDrawer').addEventListener('click', function() {
             console.log("X button pressed")
-            
 
             // Remove the selection (highlight) from the page, else closed drawer will reopen
             window.getSelection().removeAllRanges();
 
             // close the drawer
-            drawer.parentNode.removeChild(drawer);
- 
-            
+            drawer.remove();
         });
+
     }
 }
