@@ -17,6 +17,7 @@ function handleSelection(window_href, selectedText, precedingText) {
     // check for 'method', 'fig', and 'ref'
     if (selectedTextLower.includes('method')) {
         context = 'method';
+        handleMethod(window_href, precedingText)
     } else if (selectedTextLower.includes('fig') || precedingTextLower.includes('fig')) {
         context = 'fig';
         handleFig(window_href, selectedText)
