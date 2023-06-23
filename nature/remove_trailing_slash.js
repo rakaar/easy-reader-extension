@@ -7,5 +7,4 @@ function removeTrailingSlash(url) {
     }
 }
 
-module.exports = removeTrailingSlash;
 
