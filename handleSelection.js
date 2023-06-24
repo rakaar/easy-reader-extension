@@ -21,8 +21,10 @@ function handleSelection(window_href, selectedText, precedingText) {
     } else if (selectedTextLower.includes('fig') || precedingTextLower.includes('fig')) {
         context = 'fig';
         handleFig(window_href, selectedText)
-    } else if (selectedTextLower.includes('ref') || precedingTextLower.includes('ref')) {
+    } else if (extractLastNumber(selectedText) !== null) {
         context = 'ref';
+        console.log("ref num is ", extractLastNumber(selectedText))
+        handleRef(window_href, extractLastNumber(selectedText));
     }
 
     
@@ -49,3 +51,23 @@ function handleSelection(window_href, selectedText, precedingText) {
     // hit google scholar API and get the abstract
     // show the abstract
 }
+
+
+function extractLastNumber(selectedText) {
+    const hasNumber = /\d/.test(selectedText);
+    
+    if (hasNumber) {
+      // This regular expression matches the last sequence of digits in the string
+      const lastNumberMatch = selectedText.match(/(\d+)(?!.*\d)/);
+      
+      if (lastNumberMatch) {
+        return Number(lastNumberMatch[0]);
+      }
+    }
+  
+    return null;
+  }
+  
+  
+  
+  
