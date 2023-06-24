@@ -2,7 +2,12 @@
 async function handleMethod(window_href, precedingText) {
     if (window_href.includes("nature.com")) {
         // get all methods
-        const allMethods = await extractMethods(window_href, precedingText)
+        if (localStorage.getItem('eprMethods') === null) {
+            const allMethods = await extractMethods(window_href, precedingText)
+        } else {
+            const allMethods = JSON.parse(localStorage.getItem('eprMethods'));
+        }
+
         console.log("all methods are ", allMethods)
         // find top 3 similar methods
         const mostSimilarMethods = findSimilarMethods(precedingText, allMethods)

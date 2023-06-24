@@ -13,8 +13,8 @@ async function scrapePubmed(pubmed_link) {
     // Extract authors
     const repeatedAuthors = Array.from(doc.querySelectorAll('.authors-list-item .full-name')).map(a => a.textContent.trim());
     const authors =[...new Set(repeatedAuthors)];
-    
-    // Extract abstract
+        
+    // Extract abstract 
     const abstract = doc.querySelector('.abstract-content.selected p').textContent.trim();
     
     // Return the data as an object

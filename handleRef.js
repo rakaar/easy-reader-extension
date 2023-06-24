@@ -1,20 +1,25 @@
+const { all } = require("axios");
+
 // handle ref
 async function handleRef(window_href, ref_num) {
     console.log("in handleRef")
     let ref = null;
     if (window_href.includes("nature.com")) {
-        ref = await extractRef(window_href, ref_num);  
+        if (localStorage.getItem('eprRefs') === null) {
+            const allRefs = await NatureScrapeRef(window_href);
+            ref = allRefs[ref_num-1];
+        } else {
+            const allRefs = JSON.parse(localStorage.getItem('eprRefs'));
+            ref = allRefs[ref_num-1];
+        }
+
+        
         console.log("The reference to be shown is ", ref);
         // ref has keys
         // Title,PubMedLink, GoogleScholarLink,CASLink, ArticleLink
     }
 
-    // pubmed solution down for now
-    // let pubmedContent = null;
-    // if (ref != null){
-    //     const refPubmedLink = ref.PubMedLink;
-    //      pubmedContent = scrapePubmed(refPubmedLink.replace('http:', 'https:'));
-    // }
+
     // cross refAPI for now
     let crossRefContent = null;
     if (ref != null){

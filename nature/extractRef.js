@@ -1,5 +1,5 @@
 // extract Ref from link and number
-async function extractRef(windowHref,refNum) {
+async function extractRef(windowHref) {
     console.log("Extract Refis")
     // Fetch HTML content from the given URL
     const response = await fetch(windowHref);
@@ -34,5 +34,5 @@ async function extractRef(windowHref,refNum) {
     });
     console.log("references are ", references)
 
-    return references[refNum-1];
+    return references;
 }
