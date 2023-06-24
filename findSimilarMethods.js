@@ -27,7 +27,6 @@ function calculateSimilarity(referenceText, largeText) {
         weight /= 2; // Halve the weight for the next word
     }
 
-    console.log("totalScrore ", totalScore)
     return totalScore;
 }
 

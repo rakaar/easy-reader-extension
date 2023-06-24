@@ -1,17 +1,14 @@
 
 // Handle Figure
 async function handleFig(window_href, selectedText) {
-    console.group("==== in handleFig ", selectedText)
     // extract number from the selected text
     const match = selectedText.match(/\d+/);
     const firstNumber = match ? parseInt(match[0]) : null;
-    console.log("First number:", firstNumber);
-
+    
     // based on journal in window_href, get the source of the figure
     if (window_href.includes("nature.com")) {
         const imageUrl = await extractImageUrl(window_href, firstNumber);
-        console.log("In handleFig.js Image URL:", imageUrl);
-
+        
         // inserting the image
         // Remove any existing drawers
         const existingDrawer = document.getElementById('sideDrawer');
@@ -44,8 +41,6 @@ async function handleFig(window_href, selectedText) {
 
         // Add an event listener for the cross button
         document.getElementById('closeDrawer').addEventListener('click', function() {
-            console.log("X button pressed")
-
             // Remove the selection (highlight) from the page, else closed drawer will reopen
             window.getSelection().removeAllRanges();
 

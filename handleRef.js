@@ -2,7 +2,6 @@ const { all } = require("axios");
 
 // handle ref
 async function handleRef(window_href, ref_num) {
-    console.log("in handleRef")
     let ref = null;
     if (window_href.includes("nature.com")) {
         if (localStorage.getItem('eprRefs') === null) {
@@ -14,7 +13,6 @@ async function handleRef(window_href, ref_num) {
         }
 
         
-        console.log("The reference to be shown is ", ref);
         // ref has keys
         // Title,PubMedLink, GoogleScholarLink,CASLink, ArticleLink
     }
@@ -27,7 +25,6 @@ async function handleRef(window_href, ref_num) {
         crossRefContent = await getCrossRef(articleDoi);
     }
 
-    console.log("crossRefContent is ", crossRefContent)
     if (crossRefContent != null){
        // Remove any existing drawers
        const existingDrawer = document.getElementById('sideDrawer');
@@ -66,7 +63,7 @@ async function handleRef(window_href, ref_num) {
         // <p>${abstract}</p>
         // `;
         drawerHTML += `
-        <h3>${title}</h3>
+        <h3>${ref_num}. ${title}</h3>
         <h5>${authorsStr}</h5>
         `;
        

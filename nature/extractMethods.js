@@ -27,7 +27,7 @@ async function extractMethods(url) {
 
         return methods;
     } catch (err) {
-        console.log('Failed to fetch page: ', err);
+        console.log('Methods fetching: Failed to fetch page: ', err);
     }
 }
 

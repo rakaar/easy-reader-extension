@@ -17,8 +17,7 @@ async function extractImageUrl(article_link, fig_num) {
         const imageUrl = doc.querySelector(`img[alt="Fig. ${fig_num}"]`).src;
         return imageUrl;
     } catch (error) {
-        console.log("Error occurred to URL ", article_link, " and figure number ", fig_num);
-        console.log(`Final link - ${article_link}/figures/${fig_num}`)
+        console.log(`Error in request to link - ${article_link}/figures/${fig_num}`)
         console.error(error);
         return null
     }

@@ -35,7 +35,6 @@ if (document.readyState !== 'loading') {
 }
 
 async function scrapeMethodsAndRefs() {
-    console.log("DOM Content Loaded");
     let windowHref = window.location.href;
     // remove any trailing #
     let windowHrefSplit = windowHref.split('#');
@@ -45,8 +44,6 @@ async function scrapeMethodsAndRefs() {
     const allMethods = await NatureScrapeMethods(windowHrefNoHash);
     const allRefs = await NatureScrapeRef(windowHrefNoHash);
 
-    console.log("All Methods are ", allMethods)
-    console.log("All Refs are ", allRefs)
     
     localStorage.setItem('eprMethods', JSON.stringify(allMethods));
     localStorage.setItem('eprRefs', JSON.stringify(allRefs));
@@ -81,28 +78,23 @@ async function NatureScrapeMethods(url) {
 
         return methods;
     } catch (err) {
-        console.log('Failed to fetch page: ', err);
+        console.log('In handleFig: Failed to fetch page: ', err);
     }
 }
 
 // extract Ref from link and number
 async function NatureScrapeRef(url) {
-    console.log("Extract Refis")
     // Fetch HTML content from the given URL
     const response = await fetch(url);
     const html = await response.text();
-
-    console.log("got HTML")
 
     // Use DOMParser to convert the HTML string to a Document object
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 
-    console.log("doc")
     // Query the document for the list items that contain the references
     const items = doc.querySelectorAll('.c-article-references__item');
 
-    // console.log("items is ", items)
     // Map each item to an object that contains the extracted information
     const references = Array.from(items).map(item => {
         const title = item.querySelector('.c-article-references__text').textContent;
@@ -119,7 +111,6 @@ async function NatureScrapeRef(url) {
             ArticleLink: articleLinkElement ? articleLinkElement.href : "",
         };
     });
-    console.log("references are ", references)
-
+    
     return references;
 }
