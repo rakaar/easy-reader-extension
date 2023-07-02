@@ -1,44 +1,58 @@
-// handle ref
-async function handleRef(window_href, ref_num) {
+// Take a website link and reference number, show title, authors, abstract in the modal
+
+async function handleRef(windowHref, refNum) {
+    // from current paper, get the refernce paper details
+    // ref is an object with following keys: Title,PubMedLink, GoogleScholarLink,CASLink, ArticleLink
     let ref = null;
-    if (window_href.includes("nature.com")) {
-        if (localStorage.getItem('eprRefs') === null) {
-            const allRefs = await NatureScrapeRef(window_href);
-            ref = allRefs[ref_num-1];
-        } else {
-            const allRefs = JSON.parse(localStorage.getItem('eprRefs'));
-            ref = allRefs[ref_num-1];
+    if (localStorage.getItem('eprRefs') != null) {
+        const allRefs = JSON.parse(localStorage.getItem('eprRefs'));
+        ref = allRefs[refNum-1];
+    } else {
+        // nature
+        if (windowHref.includes("nature.com")) {
+            const allRefs = await NatureScrapeRef(windowHref);
+            ref = allRefs[refNum-1];
+        }
+        // TODO science
+    }
+     
+ 
+    
+    let refPaperContent = {'title': '', 'authors': '', 'abstract': ''};
+    // Plan: try extracting all 3 detials from pubmed. If it fails, extract from crossref
+    if (ref != null) {
+        if (ref.PubMedLink != '' || ref.ArticleLink != '') { // either pubmed or cross ref
+            // try pubmed first
+            let pubmedContent = null;
+            if (ref.PubMedLink != '') {
+                pubmedContent = await scrapePubmed(ref.PubMedLink);
+            } else {
+                pubmedContent = {};
+            }
+
+            if (!isObjEmpty(pubmedContent)) {
+                refPaperContent.title = pubmedContent.title;
+                refPaperContent.authors = pubmedContent.authors.join(', ');
+                refPaperContent.abstract = pubmedContent.abstract;
+            } else { // if no content from pubmed, try crossref
+                if (ref.ArticleLink != '') {
+                    const articleDoi = ref.ArticleLink.replace("https://doi.org/", "");
+                    crossRefContent = await getCrossRef(articleDoi);
+                    const { title, author, abstract } = crossRefContent.message;
+                    // Convert the authors array into a string, with each author separated by a comma
+                    const authorsNames = author.map(a => a.given + ' '  + a.family);
+                    const authorsStr = authorsNames.join(', ');
+
+                    refPaperContent.title = title;
+                    refPaperContent.authors = authorsStr;
+                    refPaperContent.abstract = abstract;
+                }
+            }
+        } else { // no pubmed, no cross ref, just show title
+            refPaperContent.title = ref.Title;
         }
 
-        
-        // ref has keys
-        // Title,PubMedLink, GoogleScholarLink,CASLink, ArticleLink
-    }
-
-    let refPaperContent = {'title': '', 'authors': [], 'abstract': ''};
-
-    let pubmedContent = null;
-    if (ref != null && ref.PubMedLink != ''){
-        pubmedContent = await scrapePubmed(ref.PubMedLink);
-        if (!isObjEmpty(pubmedContent)) {
-            refPaperContent.title = pubmedContent.title;
-            refPaperContent.authors = pubmedContent.authors.join(', ');
-            refPaperContent.abstract = pubmedContent.abstract;
-        } else {
-            const articleDoi = ref.ArticleLink.replace("https://doi.org/", "");
-            crossRefContent = await getCrossRef(articleDoi);
-            let { title, author, abstract } = crossRefContent.message;
-            // Convert the authors array into a string, with each author separated by a comma
-            let authorsNames = author.map(a => a.given + ' '  + a.family);
-            let authorsStr = authorsNames.join(', ');
-
-            refPaperContent.title = title;
-            refPaperContent.authors = authorsStr;
-            refPaperContent.abstract = abstract;
-
-        }         
-            
-    }
+    } // ref != null
     
     if (refPaperContent.title !=  ''){
        // Remove any existing drawers
@@ -74,7 +88,7 @@ async function handleRef(window_href, ref_num) {
         // <p>${abstract}</p>
         // `;
         drawerHTML += `
-        <h3>${ref_num}. ${refPaperContent.title}</h3>
+        <h3>${refNum}. ${refPaperContent.title}</h3>
         <h5>${refPaperContent.authors}</h5>
         <p>${refPaperContent.abstract}</p>
         `;
