@@ -8,7 +8,7 @@ async function handleFig(windowHref, selectedText) {
     let imageUrl = null;
     // nature
     if (windowHref.includes("nature.com")) {
-        imageUrl = await extractImageUrl(windowHref, firstNumber);
+        imageUrl = await NatureScrapeImageUrl(windowHref, firstNumber);
     }
     // todo science
 

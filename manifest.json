@@ -9,7 +9,7 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["handleSelection.js", "content.js", "handleFig.js", "nature/extractImageUrl.js", "nature/remove_trailing_slash.js", "nature/extractMethods.js", "handleMethods.js", "findSimilarMethods.js", "handleRef.js", "nature/extractRef.js", "getCrossRef.js", "scrapePubmed.js"]
+            "js": ["handleSelection.js", "content.js", "handleFig.js", "nature/NatureScrapeImageUrl.js", "nature/remove_trailing_slash.js", "nature/extractMethods.js", "handleMethods.js", "findSimilarMethods.js", "handleRef.js", "nature/extractRef.js", "getCrossRef.js", "scrapePubmed.js", "nature/NatureScrapeRef.js", "nature/NatureScrapeMethods.js"]
         }
     ]
 }

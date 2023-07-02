@@ -1,5 +1,5 @@
 // when text selected, handle it
-function handleSelection(window_href, selectedText, precedingText) {
+function handleSelection(windowHref, selectedText, precedingText) {
     
     // find if selected text is a method/figure/reference
     // convert to lowercase
@@ -12,13 +12,13 @@ function handleSelection(window_href, selectedText, precedingText) {
     // check for 'method', 'fig', and 'ref'
     if (selectedTextLower.includes('method')) {
         context = 'method';
-        handleMethod(window_href, precedingText)
+        handleMethod(windowHref, precedingText)
     } else if (selectedTextLower.includes('fig') || precedingTextLower.includes('fig')) {
         context = 'fig';
-        handleFig(window_href, selectedText)
+        handleFig(windowHref, selectedText)
     } else if (extractLastNumber(selectedText) !== null) {
         context = 'ref';
-        handleRef(window_href, extractLastNumber(selectedText));
+        handleRef(windowHref, extractLastNumber(selectedText));
     }
 }
 

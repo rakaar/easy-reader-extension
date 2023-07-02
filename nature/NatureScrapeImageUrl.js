@@ -1,7 +1,7 @@
 // extract an image path link from URL of article and fig number
 // Function to remove trailing slash
 
-async function extractImageUrl(article_link, fig_num) {
+async function NatureScrapeImageUrl(article_link, fig_num) {
     // Function to extract figure of certain number from a link
     // Input: "https://www.nature.com/articles/s41586-020-03145-4", 2
     // Output: "https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fs41586-023-05910-2/MediaObjects/41586_2023_5910_Fig2_HTML.png"
