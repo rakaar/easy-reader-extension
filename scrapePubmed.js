@@ -1,24 +1,37 @@
-async function scrapePubmed(pubmed_link) {
-    // Send a request to the website
-    const response = await fetch(pubmed_link);
-    const html = await response.text();
-    
-    // Parse the website's content
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    
-    // Extract title
-    const title = doc.querySelector('h1.heading-title').textContent.trim();
-    
-    // Extract authors
-    const repeatedAuthors = Array.from(doc.querySelectorAll('.authors-list-item .full-name')).map(a => a.textContent.trim());
-    const authors =[...new Set(repeatedAuthors)];
-        
-    // Extract abstract 
-    const abstract = doc.querySelector('.abstract-content.selected p').textContent.trim();
-    
-    // Return the data as an object
-    return {title, authors, abstract};
+pubmedAPIlink = "http://localhost:3000";
+
+async function scrapePubmed(pubMedPaperLink) {
+    pubMedPaperLink = modifyNcbiLink(pubMedPaperLink);
+    console.log(`In scrapePubmed, fetch sent to =  ${pubmedAPIlink}?link=${pubMedPaperLink}`)
+    return fetch(`${pubmedAPIlink}?link=${pubMedPaperLink}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        return {};
+    });
 }
 
+
+function modifyNcbiLink(originalLink) {
+    let url = new URL(originalLink);
+
+    // Check if the hostname includes "ncbi.nlm.nih.gov"
+    if (url.hostname.includes("ncbi.nlm.nih.gov")) {
+        let list_uids = url.searchParams.get("list_uids");
+
+        // Ensure list_uids param exists and is a valid number
+        if (list_uids && !isNaN(list_uids)) {
+            // Construct the new link
+            return `https://www.pubmed.ncbi.nlm.nih.gov/${list_uids}`;
+        }
+    }
+
+    // If conditions aren't met, return the original link
+    return originalLink;
+}
 
