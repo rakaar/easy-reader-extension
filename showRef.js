@@ -1,6 +1,6 @@
 // Take a website link and reference number, show title, authors, abstract in the modal
 
-async function handleRef(windowHref, refNum) {
+async function showRef(windowHref, refNum) {
     // from current paper, get the refernce paper details
     // ref is an object with following keys: Title,PubMedLink, GoogleScholarLink,CASLink, ArticleLink
     let ref = null;
@@ -10,7 +10,7 @@ async function handleRef(windowHref, refNum) {
     } else {
         // nature
         if (windowHref.includes("nature.com")) {
-            const allRefs = await NatureScrapeRef(windowHref);
+            const allRefs = await NaturePreScrapeRef(windowHref);
             ref = allRefs[refNum-1];
         }
         // TODO science

@@ -1,16 +1,21 @@
 // handle method
-async function handleMethod(window_href, precedingText) {
+async function showMethods(windowHref, precedingText) {
+    let allMethods = null;
     let mostSimilarMethods = null;
-    if (window_href.includes("nature.com")) {
-        // get all methods
-        if (localStorage.getItem('eprMethods') === null) {
-            const allMethods = await extractMethods(window_href, precedingText)
-            mostSimilarMethods = findSimilarMethods(precedingText, allMethods)
-        } else {
-            const allMethods = JSON.parse(localStorage.getItem('eprMethods'));
-            mostSimilarMethods = findSimilarMethods(precedingText, allMethods)
-        }
 
+    if (localStorage.getItem('eprMethods') != null) {
+        const allMethods = JSON.parse(localStorage.getItem('eprMethods'));
+        mostSimilarMethods = findSimilarMethods(precedingText, allMethods);
+    } else if (windowHref.includes("nature.com")) {
+       allMethods = await NaturePreScrapeMethods(windowHref);
+    }
+
+    if (allMethods != null) {
+        mostSimilarMethods = findSimilarMethods(precedingText, allMethods);
+    }
+
+
+    if (mostSimilarMethods != null) {
        
         // display in a drawer
        // Remove any existing drawers

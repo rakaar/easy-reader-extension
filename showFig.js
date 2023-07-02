@@ -1,6 +1,6 @@
 
 // Handle Figure
-async function handleFig(windowHref, selectedText) {
+async function showFig(windowHref, selectedText) {
     // extract number from the selected text
     const match = selectedText.match(/\d+/);
     const firstNumber = match ? parseInt(match[0]) : null;

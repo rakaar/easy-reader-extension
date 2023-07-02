@@ -12,13 +12,13 @@ function handleSelection(windowHref, selectedText, precedingText) {
     // check for 'method', 'fig', and 'ref'
     if (selectedTextLower.includes('method')) {
         context = 'method';
-        handleMethod(windowHref, precedingText)
+        showMethods(windowHref, precedingText)
     } else if (selectedTextLower.includes('fig') || precedingTextLower.includes('fig')) {
         context = 'fig';
-        handleFig(windowHref, selectedText)
+        showFig(windowHref, selectedText)
     } else if (extractLastNumber(selectedText) !== null) {
         context = 'ref';
-        handleRef(windowHref, extractLastNumber(selectedText));
+        showRef(windowHref, extractLastNumber(selectedText));
     }
 }
 
