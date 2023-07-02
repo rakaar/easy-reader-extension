@@ -1,13 +1,19 @@
 
 // Handle Figure
-async function handleFig(window_href, selectedText) {
+async function handleFig(windowHref, selectedText) {
     // extract number from the selected text
     const match = selectedText.match(/\d+/);
     const firstNumber = match ? parseInt(match[0]) : null;
     
-    // based on journal in window_href, get the source of the figure
-    if (window_href.includes("nature.com")) {
-        const imageUrl = await extractImageUrl(window_href, firstNumber);
+    let imageUrl = null;
+    // nature
+    if (windowHref.includes("nature.com")) {
+        imageUrl = await extractImageUrl(windowHref, firstNumber);
+    }
+    // todo science
+
+
+    if (imageUrl != null) {
         
         // inserting the image
         // Remove any existing drawers
