@@ -9,6 +9,8 @@ async function showFig(windowHref, selectedText) {
     // nature
     if (windowHref.includes("nature.com")) {
         imageUrl = await NatureScrapeImageUrl(windowHref, firstNumber);
+    } else if (windowHref.includes("science.org")) {
+        imageUrl = await ScienceScrapeImageUrl(windowHref, firstNumber);
     }
     // todo science
 
@@ -26,7 +28,7 @@ async function showFig(windowHref, selectedText) {
         const drawer = document.createElement('div');
         drawer.id = 'sideDrawer'; // Assign an id to the drawer
         drawer.style.position = 'fixed';
-        drawer.style.zIndex = 1000;  // make sure the drawer appears on top of all other elements
+        drawer.style.zIndex = 9999;  // make sure the drawer appears on top of all other elements
         drawer.style.right = '0';  // align the drawer to the right side of the page
         drawer.style.top = '0';    // align the drawer to the top of the page
         drawer.style.height = '100vh';  // make the drawer full height
@@ -38,9 +40,12 @@ async function showFig(windowHref, selectedText) {
 
         // Add an image and a cross button to the drawer
         drawer.innerHTML = `
-            <button id="closeDrawer" style="position: fixed; right: 20px; top: 20px; background: none; border: none; font-size: 20px;">&times;</button>
-            <img src="${imageUrl}" style="width: 100%; height: 100%;">
+        <button id="closeDrawer" style="position: fixed; right: 20px; top: 20px; background: none; border: none; font-size: 20px;">&times;</button>
+        <div style="padding: 20px;">
+            <img src="${imageUrl}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
         `;
+
 
         // Add the drawer to the page
         document.body.appendChild(drawer);
