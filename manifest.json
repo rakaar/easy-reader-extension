@@ -1,14 +1,14 @@
 {
     "manifest_version": 3,
-    "name": "Easy Reader",
-    "description": "This extension helps read papers easily",
+    "name": "Easy Paper Reader",
+    "description": "Read papers without having to open multiple tabs",
     "version": "1.0",
     "permissions": [
         "activeTab"
     ],
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
+            "matches": ["*://*.nature.com/*", "*://*.science.org/*"],
             "js": ["handleSelection.js", "content.js", "showFig.js", "nature/NatureScrapeImageUrl.js", "showMethods.js", "findSimilarMethods.js", "showRef.js", "getCrossRef.js", "scrapePubmed.js", "science/ScienceScrapeImageUrl.js"]
         }
     ]
