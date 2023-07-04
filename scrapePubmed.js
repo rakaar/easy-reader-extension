@@ -1,4 +1,4 @@
-pubmedAPIlink = "http://localhost:3000";
+pubmedAPIlink = "https://pubmed-api-q1u2.onrender.com";
 
 async function scrapePubmed(pubMedPaperLink) {
     pubMedPaperLink = modifyNcbiLink(pubMedPaperLink);
