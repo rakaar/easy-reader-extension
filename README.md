@@ -3,8 +3,14 @@ While reading neuroscience papers, I often swtich between multiple tabs - one ta
 
 ## While reading paper, 
 1. Highlight the figure number to see the figure
-TODO - image
+![Fig from a nature paper](./images/nat_f.png)
+![Fig from a science paper](./images/sci_f.png)
 2. Highlight methods word to see Methods 
-TODO - image
+![Methods from a nature paper](./images/nat_m.png)
 3. Highlight reference number to see paper - title, authors abstract
-TODO - image 
+![References from a nature paper](./images/nat_ref.png)
+![References from a science paper](./images/science_ref.png)
+
+## Journals
+1. Nature: Figures, Methods, References
+2. Science: Figures, References 
