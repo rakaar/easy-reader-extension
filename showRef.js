@@ -90,8 +90,8 @@ async function showRef(windowHref, refNum) {
         // <p>${abstract}</p>
         // `;
         drawerHTML += `
-        <h3>${refNum}. ${refPaperContent.title}</h3>
-        <h5>${refPaperContent.authors}</h5>
+        <h3>${refNum}. ${refPaperContent.title}</h3><br />
+        <h5>${refPaperContent.authors}</h5><br />
         <p>${refPaperContent.abstract}</p>
         `;
        
