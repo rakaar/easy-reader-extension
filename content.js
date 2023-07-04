@@ -52,8 +52,13 @@ async function scrapeMethodsAndRefs() {
 
         localStorage.setItem('eprMethods', JSON.stringify(allMethods));
         localStorage.setItem('eprRefs', JSON.stringify(allRefs));
+    } else if (windowHref.includes("science.org")) {
+        const allRefs = await SciencePreScrapeRef(windowHrefNoHash);
+        console.log("Starting to Scrape in Science")
+        console.log("Prescraped Refs:",allRefs)
+        localStorage.setItem('eprRefs', JSON.stringify(allRefs));
     }
-    
+     
 }
 
 
@@ -94,7 +99,7 @@ async function NaturePreScrapeMethods(url) {
 }
 
 
-// extract Ref from link and number
+// extract Ref from link
 async function NaturePreScrapeRef(url) {
     // Fetch HTML content from the given URL
     const response = await fetch(url);
@@ -124,5 +129,38 @@ async function NaturePreScrapeRef(url) {
         };
     });
     
+    return references;
+}
+
+// extract all Refs
+async function SciencePreScrapeRef(url) {
+    // Fetch HTML content from the given URL
+    const response = await fetch(url);
+    const html = await response.text();
+
+    // Use DOMParser to convert the HTML string to a Document object
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Query the document for the list items that contain the references
+    const items = doc.querySelectorAll('div[role="listitem"]');
+
+    // Map each item to an object that contains the extracted information
+    const references = Array.from(items).map(item => {
+        const title = item.querySelector('.citation-content').innerHTML;
+        const crossrefLinkElement = item.querySelector('.core-xlink-crossref a');
+        const pubMedLinkElement = item.querySelector('.core-xlink-pubmed a');
+        const isiLinkElement = item.querySelector('.core-xlink-isi a');
+        const googleScholarLinkElement = item.querySelector('.core-xlink-google-scholar a');
+
+        return {
+            Title: title,
+            ArticleLink: crossrefLinkElement ? crossrefLinkElement.href : "",
+            PubMedLink: pubMedLinkElement ? pubMedLinkElement.href : "",
+            CASLink: "", // As there was no CAS link in the given format
+            GoogleScholarLink: googleScholarLinkElement ? googleScholarLinkElement.href : "",
+        };
+    });
+
     return references;
 }

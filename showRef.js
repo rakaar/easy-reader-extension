@@ -12,8 +12,10 @@ async function showRef(windowHref, refNum) {
         if (windowHref.includes("nature.com")) {
             const allRefs = await NaturePreScrapeRef(windowHref);
             ref = allRefs[refNum-1];
+        } else if (windowHref.includes("science.org")) {
+            const allRefs = await SciencePreScrapeRef(windowHref);
+            ref = allRefs[refNum-1];
         }
-        // TODO science
     }
      
  
@@ -65,7 +67,7 @@ async function showRef(windowHref, refNum) {
        const drawer = document.createElement('div');
        drawer.id = 'sideDrawer'; // Assign an id to the drawer
        drawer.style.position = 'fixed';
-       drawer.style.zIndex = 1000;
+       drawer.style.zIndex = 9999;
        drawer.style.right = '0';
        drawer.style.top = '0';
        drawer.style.height = '100vh';
