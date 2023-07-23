@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Easy Paper Reader",
     "description": "Read papers without having to open multiple tabs",
-    "version": "2.0",
+    "version": "3.0",
     "content_scripts": [
         {
             "matches": ["*://*.nature.com/*", "*://*.science.org/*"],

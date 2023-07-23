@@ -41,6 +41,9 @@ async function scrapeMethodsAndRefs() {
     let windowHrefSplit = windowHref.split('#');
     let windowHrefNoHash = windowHrefSplit[0];
 
+    const pubmedAPIlink = "https://pubmed-api-q1u2.onrender.com";
+        
+    let preScrapedRefs = null;
     // scrape the data
     if (windowHref.includes("nature.com")) {
         console.log("Pre scraping")
@@ -50,14 +53,39 @@ async function scrapeMethodsAndRefs() {
         console.log("PreScraped Methods:",allMethods);
         console.log("Prescraped Refs:",allRefs);
 
+        preScrapedRefs = allRefs;
+
         localStorage.setItem('eprMethods', JSON.stringify(allMethods));
         localStorage.setItem('eprRefs', JSON.stringify(allRefs));
     } else if (windowHref.includes("science.org")) {
         const allRefs = await SciencePreScrapeRef(windowHrefNoHash);
         console.log("Starting to Scrape in Science")
         console.log("Prescraped Refs:",allRefs)
+
+        preScrapedRefs = allRefs;
         localStorage.setItem('eprRefs', JSON.stringify(allRefs));
     }
+    
+    if (preScrapedRefs != null) {
+        // Create an object that defines the HTTP method, headers, and body
+        let requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(preScrapedRefs) // Convert the array to JSON
+        };
+
+        // Send a POST request
+        fetch(`${pubmedAPIlink}/prescrape`, requestOptions)
+            .then(response => response.json()) // If response is in json format
+            .then(data => {
+                localStorage.setItem('eprPrescrapedAbstracts', JSON.stringify(data));
+                console.log('prescraped abstracts',data);
+            }) // Print the response data
+            .catch((error) => {
+                console.error('Error:', error); // Catch and print errors, if any
+            });
+    }
+    
      
 }
 

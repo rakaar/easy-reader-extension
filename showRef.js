@@ -27,7 +27,15 @@ async function showRef(windowHref, refNum) {
             // try pubmed first
             let pubmedContent = null;
             if (ref.PubMedLink != '') {
-                pubmedContent = await scrapePubmed(ref.PubMedLink);
+                // get it from cache or scrape
+                const localAbstracts = localStorage.getItem('eprPrescrapedAbstracts');
+                if (refNum <= 50 && localAbstracts != null) {
+                    console.log("Got abstact from LocalStorage")
+                    pubmedContent = JSON.parse(localAbstracts)[refNum-1];
+                } else {
+                    pubmedContent = await scrapePubmed(ref.PubMedLink);
+                }
+                
             } else {
                 pubmedContent = {};
             }
@@ -47,7 +55,7 @@ async function showRef(windowHref, refNum) {
 
                     refPaperContent.title = title;
                     refPaperContent.authors = authorsStr;
-                    refPaperContent.abstract = abstract;
+                    refPaperContent.abstract = abstract || '';
                 }
             }
         } else { // no pubmed, no cross ref, just show title
